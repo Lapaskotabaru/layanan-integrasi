@@ -88,26 +88,24 @@
     button:hover {
       background-color: #003366;
     }
-    .download-link {
+    .download-link, .online-link {
       display: inline-block;
       margin-top: 20px;
-      background-color: #001f3f;
-      color: white;
       padding: 10px 20px;
       border-radius: 6px;
       text-decoration: none;
+      font-weight: bold;
+    }
+    .download-link {
+      background-color: #001f3f;
+      color: white;
     }
     .download-link:hover {
       background-color: #003366;
     }
     .online-link {
-      display: inline-block;
-      margin-top: 10px;
       background-color: #27ae60;
       color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
     }
     .online-link:hover {
       background-color: #2ecc71;
@@ -119,29 +117,17 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .step {
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 5px;
-      background-color: #dfe6e9;
-    }
-    .done {
-      background-color: #27ae60;
-      color: white;
-    }
     #catatan {
       font-style: italic;
       margin-top: 20px;
       color: #e74c3c;
       text-align: center;
     }
-
-    /* Tombol Kembali ke Halaman Utama */
     .back-button {
       display: inline-block;
       margin: 2rem auto;
       padding: 0.8rem 1.5rem;
-      background-color: #f6c700; /* Warna kuning */
+      background-color: #f6c700;
       color: #001f3f;
       text-decoration: none;
       font-weight: bold;
@@ -152,12 +138,10 @@
       display: block;
       width: fit-content;
     }
-
     .back-button:hover {
       background-color: #ffdb4d;
       transform: scale(1.05);
     }
-
     footer {
       text-align: center;
       padding: 20px;
@@ -178,21 +162,16 @@
 
   <!-- Menu Navigasi -->
   <nav>
-    <a href="#tracking">Tracking Progres Integrasi</a>
     <a href="#kalkulator">Kalkulator Ekspirasi</a>
     <a href="#persyaratan">Persyaratan Integrasi</a>
   </nav>
 
-  <!-- Tracking Integrasi Section -->
-  <div class="section" id="tracking">
-    <h2>Tracking Integrasi Lapas Kotabaru</h2>
-    <p>Masukkan kode integrasi atau scan QR code:</p>
-
-    <input type="text" id="kodeInput" placeholder="Contoh: INTRG12345">
-    <br>
-    <button onclick="cekProgress()">Cek Progres</button>
-
-    <div id="progressResult" class="progress"></div>
+  <!-- Surat Jaminan Online -->
+  <div class="section">
+    <h2>✍️ Buat Surat Jaminan Online</h2>
+    <p>Anda dapat langsung membuat surat jaminan secara online melalui link berikut:</p>
+    <a href="https://forms.gle/Ts3drEiAj7PcXBQVA" 
+       target="_blank" class="online-link">👉 Klik di sini untuk Buat Surat Jaminan Online</a>
   </div>
 
   <!-- Kalkulator Ekspirasi Section -->
@@ -224,9 +203,9 @@
     </div>
     <button onclick="hitungEkspirasi()">Hitung Ekspirasi</button>
     <div id="hasilEkspirasi"></div>
-    <!-- Catatan -->
     <div id="catatan">
-      Hasil dari perhitungan tersebut bukan merupakan acuan perhitungan resmi, untuk hasil pastinya silakan tanyakan ke subseksi Registrasi Lapas Kotabaru.
+      Hasil dari perhitungan tersebut bukan merupakan acuan resmi, 
+      untuk hasil pastinya silakan tanyakan ke subseksi Registrasi Lapas Kotabaru.
     </div>
   </div>
 
@@ -240,14 +219,9 @@
       <li>4. Surat Pernyataan Narapidana/Anak</li>
       <li>5. Materai 10.000 (4 lembar)</li>
     </ul>
-
     <p>Klik tombol di bawah ini untuk mengunduh contoh Surat Jaminan:</p>
     <a href="https://docs.google.com/document/d/1X41d3bH3jqAYI3ucpeW1VmwmIbkSCL3W/edit?usp=drive_link&ouid=102947282842068055413&rtpof=true&sd=true" 
        target="_blank" class="download-link">📄 Unduh Surat Jaminan</a>
-
-    <p>Atau buat Surat Jaminan secara online melalui link berikut:</p>
-    <a href="https://forms.gle/Ts3drEiAj7PcXBQVA" 
-       target="_blank" class="online-link">✍️ Buat Surat Jaminan Online</a>
   </div>
 
   <a href="https://lapaskotabaru.github.io/siceni" class="back-button">⬅️ Kembali ke Halaman Utama</a>
@@ -257,51 +231,6 @@
   </footer>
   
   <script>
-    const dataIntegrasi = {
-      'INTRG12345': { nama: 'Ahmad Fauzi', tanggal: ['2025-04-01', '2025-04-04', '2025-04-10', '', ''] },
-      'INTRG67890': { nama: 'Budi Santoso', tanggal: ['2025-04-02', '2025-04-05', '2025-04-09', '2025-04-14', '2025-04-18'] },
-      'INTRG54321': { nama: 'Cecep Suhendar', tanggal: ['2025-04-05', '', '', '', ''] },
-      'INTRG11223': { nama: 'Doni Wahyudi', tanggal: ['2025-04-02', '2025-04-06', '2025-04-09', '2025-04-15', ''] },
-      'INTRG33445': { nama: 'Eko Prasetyo', tanggal: ['2025-04-03', '2025-04-08', '', '', ''] }
-    };
-
-    const langkah = [
-      '1. Memasukkan berkas jaminan',
-      '2. Permintaan litmas',
-      '3. Litmas selesai',
-      '4. Sidang TPP',
-      '5. Sudah Diusulkan'
-    ];
-
-    function cekProgress(kodeOverride = null) {
-      const kode = kodeOverride || document.getElementById('kodeInput').value.trim();
-      const resultDiv = document.getElementById('progressResult');
-      resultDiv.innerHTML = '';
-
-      if (!dataIntegrasi[kode]) {
-        resultDiv.innerHTML = '<p style="color:red;">Kode tidak ditemukan.</p>';
-        return;
-      }
-
-      const data = dataIntegrasi[kode];
-      const namaDiv = document.createElement('div');
-      namaDiv.className = 'wbp-name';
-      namaDiv.textContent = `Nama WBP: ${data.nama}`;
-      resultDiv.appendChild(namaDiv);
-
-      for (let i = 0; i < langkah.length; i++) {
-        const stepDiv = document.createElement('div');
-        stepDiv.className = 'step';
-        if (data.tanggal[i]) {
-          stepDiv.classList.add('done');
-          stepDiv.textContent = `${langkah[i]} (Tanggal: ${data.tanggal[i]})`;
-        } else {
-          stepDiv.textContent = `${langkah[i]} (Belum dilakukan)`;
-        }
-        resultDiv.appendChild(stepDiv);
-      }
-    }
-
     function hitungEkspirasi() {
       const tanggalPenahanan = new Date(document.getElementById('tglPenahanan').value);
       const lamaTahun = parseInt(document.getElementById('tahunVonis').value) || 0;
@@ -333,49 +262,21 @@
         let day = '' + d.getDate();
         let month = '' + (d.getMonth() + 1);
         const year = d.getFullYear();
-
         if (day.length < 2) day = '0' + day;
         if (month.length < 2) month = '0' + month;
-
         return [day, month, year].join('-');
       }
 
       const totalRemisiHari = remisiBulan * 30 + remisiHari;
       const totalTambahanHari = lamaBulan * 30 + lamaHari;
 
-      // Ekspirasi
       let tanggalEkspirasi = tambahTanggalAwal(tanggalPenahanan, lamaTahun, totalTambahanHari);
       tanggalEkspirasi = kurangiHari(tanggalEkspirasi, totalRemisiHari);
 
-      // 1/3 Masa Pidana
-      const tahunBagiTiga = Math.floor(lamaTahun / 3);
-      const sisaTahunBagiTiga = lamaTahun % 3;
-      const sisaHariBagiTiga = (sisaTahunBagiTiga * 360 + lamaBulan * 30 + lamaHari) / 3;
-      let tanggalSatuPertiga = tambahTanggalAwal(tanggalPenahanan, tahunBagiTiga, sisaHariBagiTiga);
-      tanggalSatuPertiga = kurangiHari(tanggalSatuPertiga, totalRemisiHari);
-
-      // 1/2 Masa Pidana
-      const tahunBagiDua = Math.floor(lamaTahun / 2);
-      const sisaTahunBagiDua = lamaTahun % 2;
-      const sisaHariBagiDua = (sisaTahunBagiDua * 360 + lamaBulan * 30 + lamaHari) / 2;
-      let tanggalSatuPerdua = tambahTanggalAwal(tanggalPenahanan, tahunBagiDua, sisaHariBagiDua);
-      tanggalSatuPerdua = kurangiHari(tanggalSatuPerdua, totalRemisiHari);
-
-      // 2/3 Masa Pidana
-      const tahunDuaPerTiga = Math.floor((2 * lamaTahun) / 3);
-      const sisaTahunDuaPerTiga = (2 * lamaTahun) % 3;
-      const sisaHariDuaPerTiga = (sisaTahunDuaPerTiga * 360 + 2 * (lamaBulan * 30 + lamaHari)) / 3;
-      let tanggalDuaPertiga = tambahTanggalAwal(tanggalPenahanan, tahunDuaPerTiga, sisaHariDuaPerTiga);
-      tanggalDuaPertiga = kurangiHari(tanggalDuaPertiga, totalRemisiHari);
-
       document.getElementById('hasilEkspirasi').innerHTML = `
         <p>Tanggal Ekspirasi: <strong>${formatTanggal(tanggalEkspirasi)}</strong></p>
-        <p>1/3 Masa Pidana: <strong>${formatTanggal(tanggalSatuPertiga)}</strong></p>
-        <p>1/2 Masa Pidana: <strong>${formatTanggal(tanggalSatuPerdua)}</strong></p>
-        <p>2/3 Masa Pidana: <strong>${formatTanggal(tanggalDuaPertiga)}</strong></p>
       `;
     }
   </script>
-
 </body>
 </html>
